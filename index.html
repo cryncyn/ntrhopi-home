@@ -1,559 +1,1276 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ntrhopi — Building a cleaner, more circular India.</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --paper:#F6F5F0;
-    --paper-2:#EFEDE5;
-    --ink:#171A16;
-    --ink-2:#242720;
-    --moss:#46614A;
-    --moss-deep:#334A37;
-    --ochre:#B08A3E;
-    --stone:#8C887D;
-    --stone-line:#DAD6C9;
-    --stone-line-dark:#333630;
-    --white:#FFFFFF;
-    --serif: "Source Serif 4", Georgia, serif;
-    --sans: "IBM Plex Sans", -apple-system, sans-serif;
-    --mono: "IBM Plex Mono", monospace;
-  }
-  *{box-sizing:border-box; margin:0; padding:0;}
-  html{scroll-behavior:smooth;}
-  body{
-    background:var(--paper);
-    color:var(--ink);
-    font-family:var(--sans);
-    font-size:16px;
-    line-height:1.6;
-    -webkit-font-smoothing:antialiased;
-  }
-  a{color:inherit; text-decoration:none;}
-  img{max-width:100%; display:block;}
-  .wrap{max-width:1180px; margin:0 auto; padding:0 32px;}
-  @media (max-width:640px){ .wrap{padding:0 20px;} }
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ntrhopi — Building a cleaner, more circular India.</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --paper: #f6f5f0;
+        --paper-2: #efede5;
+        --ink: #171a16;
+        --ink-2: #242720;
+        --moss: #46614a;
+        --moss-deep: #334a37;
+        --ochre: #b08a3e;
+        --stone: #8c887d;
+        --stone-line: #dad6c9;
+        --stone-line-dark: #333630;
+        --white: #ffffff;
+        --serif: "Source Serif 4", Georgia, serif;
+        --sans: "IBM Plex Sans", -apple-system, sans-serif;
+        --mono: "IBM Plex Mono", monospace;
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        background: var(--paper);
+        color: var(--ink);
+        font-family: var(--sans);
+        font-size: 16px;
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+      }
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+      img {
+        max-width: 100%;
+        display: block;
+      }
+      .wrap {
+        max-width: 1180px;
+        margin: 0 auto;
+        padding: 0 32px;
+      }
+      @media (max-width: 640px) {
+        .wrap {
+          padding: 0 20px;
+        }
+      }
 
-  h1,h2,h3{font-family:var(--serif); font-weight:500; letter-spacing:-0.01em; color:inherit;}
-  .lede{color:var(--stone); max-width:44ch;}
+      h1,
+      h2,
+      h3 {
+        font-family: var(--serif);
+        font-weight: 500;
+        letter-spacing: -0.01em;
+        color: inherit;
+      }
+      .lede {
+        color: var(--stone);
+        max-width: 44ch;
+      }
 
-  /* ===== NAV ===== */
-  header.site{
-    position:sticky; top:0; z-index:50;
-    background:rgba(246,245,240,0.92);
-    backdrop-filter:blur(8px);
-    border-bottom:1px solid var(--stone-line);
-  }
-  .nav{
-    display:flex; align-items:center; justify-content:space-between;
-    padding:20px 32px; max-width:1180px; margin:0 auto;
-  }
-  .logo{
-    font-family:var(--serif); font-size:20px; font-weight:600; letter-spacing:0.02em;
-  }
-  .nav-links{display:flex; gap:36px; align-items:center;}
-  .nav-links a{font-size:14.5px; color:var(--ink-2);}
-  .nav-links a:hover{color:var(--moss);}
-  .nav-cta{display:flex; gap:12px; align-items:center;}
-  .btn{
-    font-family:var(--sans); font-size:14px; font-weight:500;
-    padding:11px 20px; border-radius:2px; border:1px solid transparent;
-    display:inline-block; cursor:pointer; transition:background .15s, color .15s, border-color .15s;
-  }
-  .btn-primary{background:var(--ink); color:var(--paper);}
-  .btn-primary:hover{background:var(--moss-deep);}
-  .btn-ghost{color:var(--ink); border-color:var(--stone-line);}
-  .btn-ghost:hover{border-color:var(--ink);}
-  .btn-on-dark{background:var(--paper); color:var(--ink);}
-  .btn-on-dark:hover{background:var(--white);}
-  .btn-ghost-dark{color:var(--paper); border-color:rgba(246,245,240,0.35);}
-  .btn-ghost-dark:hover{border-color:var(--paper);}
-  .navburger{display:none;}
-  @media (max-width:900px){
-    .nav-links{display:none;}
-    .navburger{display:block; font-size:14px; border:1px solid var(--stone-line); padding:9px 14px; border-radius:2px;}
-  }
+      /* ===== NAV ===== */
+      header.site {
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        background: rgba(246, 245, 240, 0.92);
+        backdrop-filter: blur(8px);
+        border-bottom: 1px solid var(--stone-line);
+      }
+      .nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 20px 32px;
+        max-width: 1180px;
+        margin: 0 auto;
+      }
+      .logo {
+        font-family: var(--serif);
+        font-size: 20px;
+        font-weight: 600;
+        letter-spacing: 0.02em;
+      }
+      .nav-links {
+        display: flex;
+        gap: 36px;
+        align-items: center;
+      }
+      .nav-links a {
+        font-size: 14.5px;
+        color: var(--ink-2);
+      }
+      .nav-links a:hover {
+        color: var(--moss);
+      }
+      .nav-cta {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+      }
+      .btn {
+        font-family: var(--sans);
+        font-size: 14px;
+        font-weight: 500;
+        padding: 11px 20px;
+        border-radius: 2px;
+        border: 1px solid transparent;
+        display: inline-block;
+        cursor: pointer;
+        transition:
+          background 0.15s,
+          color 0.15s,
+          border-color 0.15s;
+      }
+      .btn-primary {
+        background: var(--ink);
+        color: var(--paper);
+      }
+      .btn-primary:hover {
+        background: var(--moss-deep);
+      }
+      .btn-ghost {
+        color: var(--ink);
+        border-color: var(--stone-line);
+      }
+      .btn-ghost:hover {
+        border-color: var(--ink);
+      }
+      .btn-on-dark {
+        background: var(--paper);
+        color: var(--ink);
+      }
+      .btn-on-dark:hover {
+        background: var(--white);
+      }
+      .btn-ghost-dark {
+        color: var(--paper);
+        border-color: rgba(246, 245, 240, 0.35);
+      }
+      .btn-ghost-dark:hover {
+        border-color: var(--paper);
+      }
+      .navburger {
+        display: none;
+      }
+      @media (max-width: 900px) {
+        .nav-links {
+          display: none;
+        }
+        .navburger {
+          display: block;
+          font-size: 14px;
+          border: 1px solid var(--stone-line);
+          padding: 9px 14px;
+          border-radius: 2px;
+        }
+      }
 
-  /* ===== HERO ===== */
-  .hero{
-    padding:96px 0 88px;
-    display:grid; grid-template-columns:1.1fr 0.9fr; gap:64px; align-items:end;
-  }
-  .hero h1{
-    font-size:clamp(40px, 5.6vw, 68px);
-    line-height:1.04;
-    max-width:14ch;
-  }
-  .hero-copy{margin-top:26px; font-size:18px; max-width:38ch; color:var(--ink-2);}
-  .hero-actions{margin-top:36px; display:flex; gap:14px; flex-wrap:wrap;}
-  .hero-diagram{align-self:end;}
-  @media (max-width:900px){
-    .hero{grid-template-columns:1fr; padding:56px 0 48px; gap:40px;}
-  }
+      /* ===== HERO ===== */
+      .hero {
+        padding: 96px 0 88px;
+        display: grid;
+        grid-template-columns: 1.1fr 0.9fr;
+        gap: 64px;
+        align-items: end;
+      }
+      .hero h1 {
+        font-size: clamp(40px, 5.6vw, 68px);
+        line-height: 1.04;
+        max-width: 14ch;
+      }
+      .hero-copy {
+        margin-top: 26px;
+        font-size: 18px;
+        max-width: 38ch;
+        color: var(--ink-2);
+      }
+      .hero-actions {
+        margin-top: 36px;
+        display: flex;
+        gap: 14px;
+        flex-wrap: wrap;
+      }
+      .hero-diagram {
+        align-self: end;
+      }
+      @media (max-width: 900px) {
+        .hero {
+          grid-template-columns: 1fr;
+          padding: 56px 0 48px;
+          gap: 40px;
+        }
+      }
 
-  /* flow diagram used in hero + section */
-  .flow{
-    display:flex; align-items:center; gap:0; flex-wrap:wrap;
-    font-family:var(--mono); font-size:12.5px; letter-spacing:0.02em; color:var(--stone);
-  }
-  .flow .node{
-    display:flex; flex-direction:column; align-items:flex-start; gap:6px;
-    padding:14px 0;
-  }
-  .flow .dot{width:7px; height:7px; border-radius:50%; background:var(--moss);}
-  .flow .label{color:var(--ink);}
-  .flow .arrow{width:28px; height:1px; background:var(--stone-line); position:relative; margin:0 10px;}
-  @media (max-width:900px){ .flow{display:none;} }
+      /* flow diagram used in hero + section */
+      .flow {
+        display: flex;
+        align-items: center;
+        gap: 0;
+        flex-wrap: wrap;
+        font-family: var(--mono);
+        font-size: 12.5px;
+        letter-spacing: 0.02em;
+        color: var(--stone);
+      }
+      .flow .node {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+        padding: 14px 0;
+      }
+      .flow .dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--moss);
+      }
+      .flow .label {
+        color: var(--ink);
+      }
+      .flow .arrow {
+        width: 28px;
+        height: 1px;
+        background: var(--stone-line);
+        position: relative;
+        margin: 0 10px;
+      }
+      @media (max-width: 900px) {
+        .flow {
+          display: none;
+        }
+      }
 
-  /* ===== SECTION SCAFFOLDING ===== */
-  section{padding:88px 0;}
-  .section-head{
-    display:grid; grid-template-columns:0.55fr 0.45fr; gap:48px;
-    margin-bottom:56px; align-items:end;
-  }
-  @media (max-width:800px){ .section-head{grid-template-columns:1fr; gap:16px;} }
-  .section-head h2{font-size:clamp(28px, 3.4vw, 40px); max-width:16ch;}
-  .rule{border:none; border-top:1px solid var(--stone-line); margin:0;}
-  .section-alt{background:var(--paper-2);}
-  .section-dark{background:var(--ink); color:var(--paper);}
-  .section-dark .lede{color:rgba(246,245,240,0.62);}
-  .section-dark .rule{border-top-color:var(--stone-line-dark);}
+      /* ===== SECTION SCAFFOLDING ===== */
+      section {
+        padding: 88px 0;
+      }
+      .section-head {
+        display: grid;
+        grid-template-columns: 0.55fr 0.45fr;
+        gap: 48px;
+        margin-bottom: 56px;
+        align-items: end;
+      }
+      @media (max-width: 800px) {
+        .section-head {
+          grid-template-columns: 1fr;
+          gap: 16px;
+        }
+      }
+      .section-head h2 {
+        font-size: clamp(28px, 3.4vw, 40px);
+        max-width: 16ch;
+      }
+      .rule {
+        border: none;
+        border-top: 1px solid var(--stone-line);
+        margin: 0;
+      }
+      .section-alt {
+        background: var(--paper-2);
+      }
+      .section-dark {
+        background: var(--ink);
+        color: var(--paper);
+      }
+      .section-dark .lede {
+        color: rgba(246, 245, 240, 0.62);
+      }
+      .section-dark .rule {
+        border-top-color: var(--stone-line-dark);
+      }
 
-  /* ===== FLOW SECTION (waste to resource) ===== */
-  .flow-full{
-    display:flex; align-items:stretch; justify-content:space-between;
-    padding:40px 0 8px; overflow-x:auto; gap:0;
-  }
-  .flow-step{
-    flex:1; min-width:120px; position:relative; padding-top:28px;
-  }
-  .flow-step::before{
-    content:""; position:absolute; top:0; left:0; width:100%; height:1px; background:var(--stone-line);
-  }
-  .flow-step::after{
-    content:""; position:absolute; top:-3px; left:0; width:7px; height:7px; border-radius:50%; background:var(--moss);
-  }
-  .flow-step .fnum{font-family:var(--mono); font-size:12px; color:var(--stone);}
-  .flow-step .flabel{font-family:var(--serif); font-size:20px; margin-top:8px;}
+      /* ===== FLOW SECTION (waste to resource) ===== */
+      .flow-full {
+        display: flex;
+        align-items: stretch;
+        justify-content: space-between;
+        padding: 40px 0 8px;
+        overflow-x: auto;
+        gap: 0;
+      }
+      .flow-step {
+        flex: 1;
+        min-width: 120px;
+        position: relative;
+        padding-top: 28px;
+      }
+      .flow-step::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 1px;
+        background: var(--stone-line);
+      }
+      .flow-step::after {
+        content: "";
+        position: absolute;
+        top: -3px;
+        left: 0;
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--moss);
+      }
+      .flow-step .fnum {
+        font-family: var(--mono);
+        font-size: 12px;
+        color: var(--stone);
+      }
+      .flow-step .flabel {
+        font-family: var(--serif);
+        font-size: 20px;
+        margin-top: 8px;
+      }
 
-  /* ===== CARDS: WHAT WE DO ===== */
-  .cards4{display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--stone-line); border:1px solid var(--stone-line);}
-  .cards4 .card{background:var(--paper); padding:32px 28px; min-height:220px; display:flex; flex-direction:column; justify-content:space-between;}
-  .card .card-index{font-family:var(--mono); font-size:12px; color:var(--ochre);}
-  .card h3{font-size:20px; margin-top:20px;}
-  .card p{margin-top:12px; color:var(--stone); font-size:14.5px;}
-  @media (max-width:900px){ .cards4{grid-template-columns:1fr 1fr;} }
-  @media (max-width:560px){ .cards4{grid-template-columns:1fr;} }
+      /* ===== CARDS: WHAT WE DO ===== */
+      .cards4 {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1px;
+        background: var(--stone-line);
+        border: 1px solid var(--stone-line);
+      }
+      .cards4 .card {
+        background: var(--paper);
+        padding: 32px 28px;
+        min-height: 220px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+      .card .card-index {
+        font-family: var(--mono);
+        font-size: 12px;
+        color: var(--ochre);
+      }
+      .card h3 {
+        font-size: 20px;
+        margin-top: 20px;
+      }
+      .card p {
+        margin-top: 12px;
+        color: var(--stone);
+        font-size: 14.5px;
+      }
+      @media (max-width: 900px) {
+        .cards4 {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+      @media (max-width: 560px) {
+        .cards4 {
+          grid-template-columns: 1fr;
+        }
+      }
 
-  .link-arrow{display:inline-flex; align-items:center; gap:8px; font-size:14.5px; font-weight:500; color:var(--moss); margin-top:44px;}
-  .link-arrow svg{transition:transform .15s;}
-  .link-arrow:hover svg{transform:translateX(3px);}
+      .link-arrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 14.5px;
+        font-weight: 500;
+        color: var(--moss);
+        margin-top: 44px;
+      }
+      .link-arrow svg {
+        transition: transform 0.15s;
+      }
+      .link-arrow:hover svg {
+        transform: translateX(3px);
+      }
 
-  /* ===== GREENBOOK FEATURE ===== */
-  .greenbook-panel{
-    background:var(--ink); color:var(--paper);
-    border-radius:4px; padding:64px; display:grid; grid-template-columns:1fr 1fr; gap:56px; align-items:center;
-  }
-  .gb-mark{font-family:var(--serif); font-size:15px; letter-spacing:0.06em; color:var(--ochre); text-transform:uppercase;}
-  .greenbook-panel h2{font-size:clamp(30px,3.6vw,42px); margin-top:14px; color:var(--paper);}
-  .greenbook-panel .lede{margin-top:16px; color:rgba(246,245,240,0.65); max-width:40ch;}
-  .gb-actions{margin-top:32px; display:flex; gap:14px;}
-  @media (max-width:900px){ .greenbook-panel{grid-template-columns:1fr; padding:40px 28px;} }
+      /* ===== GREENBOOK FEATURE ===== */
+      .greenbook-panel {
+        background: var(--ink);
+        color: var(--paper);
+        border-radius: 4px;
+        padding: 64px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 56px;
+        align-items: center;
+      }
+      .gb-mark {
+        font-family: var(--serif);
+        font-size: 15px;
+        letter-spacing: 0.06em;
+        color: var(--ochre);
+        text-transform: uppercase;
+      }
+      .greenbook-panel h2 {
+        font-size: clamp(30px, 3.6vw, 42px);
+        margin-top: 14px;
+        color: var(--paper);
+      }
+      .greenbook-panel .lede {
+        margin-top: 16px;
+        color: rgba(246, 245, 240, 0.65);
+        max-width: 40ch;
+      }
+      .gb-actions {
+        margin-top: 32px;
+        display: flex;
+        gap: 14px;
+      }
+      @media (max-width: 900px) {
+        .greenbook-panel {
+          grid-template-columns: 1fr;
+          padding: 40px 28px;
+        }
+      }
 
-  /* recycler card mock */
-  .gb-mock{
-    background:var(--paper); color:var(--ink); border-radius:3px; padding:26px; font-size:14px;
-  }
-  .gb-mock .mrow{display:flex; justify-content:space-between; align-items:center;}
-  .gb-mock .mname{font-family:var(--serif); font-size:19px;}
-  .badge{
-    font-family:var(--mono); font-size:11px; color:var(--moss); border:1px solid var(--moss);
-    padding:3px 8px; border-radius:20px;
-  }
-  .gb-mock .mloc{color:var(--stone); font-size:13px; margin-top:4px;}
-  .gb-mock .mtags{display:flex; gap:6px; flex-wrap:wrap; margin-top:16px;}
-  .gb-mock .tag{background:var(--paper-2); border:1px solid var(--stone-line); font-size:12px; padding:4px 10px; border-radius:20px; color:var(--ink-2);}
-  .gb-mock .mscore{margin-top:20px; padding-top:16px; border-top:1px solid var(--stone-line); display:flex; justify-content:space-between; font-family:var(--mono); font-size:12px; color:var(--stone);}
-  .gb-mock .mscore b{color:var(--ink); font-family:var(--sans); font-size:15px;}
+      /* recycler card mock */
+      .gb-mock {
+        background: var(--paper);
+        color: var(--ink);
+        border-radius: 3px;
+        padding: 26px;
+        font-size: 14px;
+      }
+      .gb-mock .mrow {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .gb-mock .mname {
+        font-family: var(--serif);
+        font-size: 19px;
+      }
+      .badge {
+        font-family: var(--mono);
+        font-size: 11px;
+        color: var(--moss);
+        border: 1px solid var(--moss);
+        padding: 3px 8px;
+        border-radius: 20px;
+      }
+      .gb-mock .mloc {
+        color: var(--stone);
+        font-size: 13px;
+        margin-top: 4px;
+      }
+      .gb-mock .mtags {
+        display: flex;
+        gap: 6px;
+        flex-wrap: wrap;
+        margin-top: 16px;
+      }
+      .gb-mock .tag {
+        background: var(--paper-2);
+        border: 1px solid var(--stone-line);
+        font-size: 12px;
+        padding: 4px 10px;
+        border-radius: 20px;
+        color: var(--ink-2);
+      }
+      .gb-mock .mscore {
+        margin-top: 20px;
+        padding-top: 16px;
+        border-top: 1px solid var(--stone-line);
+        display: flex;
+        justify-content: space-between;
+        font-family: var(--mono);
+        font-size: 12px;
+        color: var(--stone);
+      }
+      .gb-mock .mscore b {
+        color: var(--ink);
+        font-family: var(--sans);
+        font-size: 15px;
+      }
 
-  /* ===== WASTE STREAMS ===== */
-  .streams{display:grid; grid-template-columns:repeat(4, 1fr); gap:1px; background:var(--stone-line); border:1px solid var(--stone-line);}
-  .stream{background:var(--paper); padding:24px; font-size:15px; display:flex; align-items:center; justify-content:space-between; transition:background .15s;}
-  .stream:hover{background:var(--paper-2);}
-  .stream svg{opacity:0.5;}
-  @media (max-width:900px){ .streams{grid-template-columns:repeat(2,1fr);} }
-  @media (max-width:560px){ .streams{grid-template-columns:1fr;} }
+      /* ===== WASTE STREAMS ===== */
+      .streams {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1px;
+        background: var(--stone-line);
+        border: 1px solid var(--stone-line);
+      }
+      .stream {
+        background: var(--paper);
+        padding: 24px;
+        font-size: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        transition: background 0.15s;
+      }
+      .stream:hover {
+        background: var(--paper-2);
+      }
+      .stream svg {
+        opacity: 0.5;
+      }
+      @media (max-width: 900px) {
+        .streams {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      @media (max-width: 560px) {
+        .streams {
+          grid-template-columns: 1fr;
+        }
+      }
 
-  /* ===== WHY / 3 col ===== */
-  .cols3{display:grid; grid-template-columns:repeat(3,1fr); gap:48px; margin-top:8px;}
-  .cols3 .col h3{font-size:19px; display:flex; align-items:baseline; gap:10px;}
-  .cols3 .col .cnum{font-family:var(--mono); font-size:12px; color:var(--ochre);}
-  .cols3 .col p{margin-top:12px; color:var(--stone); font-size:14.5px;}
-  @media (max-width:800px){ .cols3{grid-template-columns:1fr; gap:32px;} }
+      /* ===== WHY / 3 col ===== */
+      .cols3 {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 48px;
+        margin-top: 8px;
+      }
+      .cols3 .col h3 {
+        font-size: 19px;
+        display: flex;
+        align-items: baseline;
+        gap: 10px;
+      }
+      .cols3 .col .cnum {
+        font-family: var(--mono);
+        font-size: 12px;
+        color: var(--ochre);
+      }
+      .cols3 .col p {
+        margin-top: 12px;
+        color: var(--stone);
+        font-size: 14.5px;
+      }
+      @media (max-width: 800px) {
+        .cols3 {
+          grid-template-columns: 1fr;
+          gap: 32px;
+        }
+      }
 
-  /* ===== INTELLIGENCE ===== */
-  .intel-grid{display:grid; grid-template-columns:1fr 1fr; gap:0 64px;}
-  .intel-item{padding:20px 0; border-bottom:1px solid var(--stone-line-dark); display:flex; justify-content:space-between; align-items:baseline;}
-  .intel-item span{font-family:var(--mono); font-size:12px; color:var(--ochre);}
-  @media (max-width:700px){ .intel-grid{grid-template-columns:1fr;} }
+      /* ===== INTELLIGENCE ===== */
+      .intel-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0 64px;
+      }
+      .intel-item {
+        padding: 20px 0;
+        border-bottom: 1px solid var(--stone-line-dark);
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+      }
+      .intel-item span {
+        font-family: var(--mono);
+        font-size: 12px;
+        color: var(--ochre);
+      }
+      @media (max-width: 700px) {
+        .intel-grid {
+          grid-template-columns: 1fr;
+        }
+      }
 
-  /* ===== IMPACT ===== */
-  .impact-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--stone-line-dark); border:1px solid var(--stone-line-dark); margin-top:8px;}
-  .impact-cell{background:var(--ink); padding:32px 28px;}
-  .impact-cell .imetric{font-family:var(--serif); font-size:15px; color:rgba(246,245,240,0.85);}
-  .impact-cell .ival{font-family:var(--mono); font-size:13px; color:var(--stone); margin-top:10px;}
-  @media (max-width:800px){ .impact-grid{grid-template-columns:repeat(2,1fr);} }
-  @media (max-width:560px){ .impact-grid{grid-template-columns:1fr;} }
+      /* ===== IMPACT ===== */
+      .impact-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1px;
+        background: var(--stone-line-dark);
+        border: 1px solid var(--stone-line-dark);
+        margin-top: 8px;
+      }
+      .impact-cell {
+        background: var(--ink);
+        padding: 32px 28px;
+      }
+      .impact-cell .imetric {
+        font-family: var(--serif);
+        font-size: 15px;
+        color: rgba(246, 245, 240, 0.85);
+      }
+      .impact-cell .ival {
+        font-family: var(--mono);
+        font-size: 13px;
+        color: var(--stone);
+        margin-top: 10px;
+      }
+      @media (max-width: 800px) {
+        .impact-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      @media (max-width: 560px) {
+        .impact-grid {
+          grid-template-columns: 1fr;
+        }
+      }
 
-  /* ===== INSIGHTS ===== */
-  .insight-list{border-top:1px solid var(--stone-line);}
-  .insight-row{
-    display:grid; grid-template-columns:1fr 3fr auto; gap:24px; align-items:center;
-    padding:22px 0; border-bottom:1px solid var(--stone-line);
-  }
-  .insight-row .icat{font-family:var(--mono); font-size:12px; color:var(--moss);}
-  .insight-row h3{font-size:18px; font-weight:400;}
-  .insight-row .iarrow{color:var(--stone);}
-  @media (max-width:700px){
-    .insight-row{grid-template-columns:1fr; gap:6px;}
-    .insight-row .iarrow{display:none;}
-  }
+      /* ===== INSIGHTS ===== */
+      .insight-list {
+        border-top: 1px solid var(--stone-line);
+      }
+      .insight-row {
+        display: grid;
+        grid-template-columns: 1fr 3fr auto;
+        gap: 24px;
+        align-items: center;
+        padding: 22px 0;
+        border-bottom: 1px solid var(--stone-line);
+      }
+      .insight-row .icat {
+        font-family: var(--mono);
+        font-size: 12px;
+        color: var(--moss);
+      }
+      .insight-row h3 {
+        font-size: 18px;
+        font-weight: 400;
+      }
+      .insight-row .iarrow {
+        color: var(--stone);
+      }
+      @media (max-width: 700px) {
+        .insight-row {
+          grid-template-columns: 1fr;
+          gap: 6px;
+        }
+        .insight-row .iarrow {
+          display: none;
+        }
+      }
 
-  /* ===== FINAL CTA ===== */
-  .final-grid{display:grid; grid-template-columns:1.3fr 1fr; gap:1px; background:var(--stone-line-dark); border:1px solid var(--stone-line-dark);}
-  .final-cell{background:var(--ink); padding:56px;}
-  .final-cell h2{color:var(--paper); font-size:clamp(26px,3vw,36px); max-width:16ch;}
-  .final-cell p{color:rgba(246,245,240,0.62); margin-top:14px; max-width:36ch;}
-  .final-actions{margin-top:28px; display:flex; gap:14px; flex-wrap:wrap;}
-  .final-cell.recycler h2{font-size:22px;}
-  @media (max-width:800px){ .final-grid{grid-template-columns:1fr;} .final-cell{padding:40px 28px;} }
+      /* ===== FINAL CTA ===== */
+      .final-grid {
+        display: grid;
+        grid-template-columns: 1.3fr 1fr;
+        gap: 1px;
+        background: var(--stone-line-dark);
+        border: 1px solid var(--stone-line-dark);
+      }
+      .final-cell {
+        background: var(--ink);
+        padding: 56px;
+      }
+      .final-cell h2 {
+        color: var(--paper);
+        font-size: clamp(26px, 3vw, 36px);
+        max-width: 16ch;
+      }
+      .final-cell p {
+        color: rgba(246, 245, 240, 0.62);
+        margin-top: 14px;
+        max-width: 36ch;
+      }
+      .contact-details {
+        display: grid;
+        gap: 6px;
+        margin-top: 22px;
+        color: rgba(246, 245, 240, 0.82);
+        font-size: 14px;
+      }
+      .contact-details a:hover {
+        color: var(--paper);
+        text-decoration: underline;
+      }
+      .final-actions {
+        margin-top: 28px;
+        display: flex;
+        gap: 14px;
+        flex-wrap: wrap;
+      }
+      .final-cell.recycler h2 {
+        font-size: 22px;
+      }
+      @media (max-width: 800px) {
+        .final-grid {
+          grid-template-columns: 1fr;
+        }
+        .final-cell {
+          padding: 40px 28px;
+        }
+      }
 
-  /* ===== FOOTER ===== */
-  footer{background:var(--ink); color:rgba(246,245,240,0.55); padding:64px 0 32px; font-size:13.5px;}
-  .foot-grid{display:grid; grid-template-columns:1.4fr repeat(3,1fr); gap:40px;}
-  .foot-logo{font-family:var(--serif); color:var(--paper); font-size:19px;}
-  .foot-tag{margin-top:12px; max-width:30ch;}
-  .foot-col h4{font-family:var(--sans); color:var(--paper); font-size:12.5px; font-weight:500; letter-spacing:0.03em; text-transform:uppercase; margin-bottom:14px;}
-  .foot-col a{display:block; padding:5px 0; color:rgba(246,245,240,0.55);}
-  .foot-col a:hover{color:var(--paper);}
-  .foot-bottom{margin-top:56px; padding-top:24px; border-top:1px solid var(--stone-line-dark); display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px;}
-  @media (max-width:800px){ .foot-grid{grid-template-columns:1fr 1fr; gap:32px;} }
-</style>
-</head>
-<body>
-
-<header class="site">
-  <div class="nav">
-    <a class="logo" href="#top">NTRHOPI</a>
-    <nav class="nav-links">
-      <a href="#solutions">Solutions</a>
-      <a href="#industries">Industries</a>
-      <a href="#greenbook">Greenbook</a>
-      <a href="#insights">Insights</a>
-      <a href="#about">About</a>
-      <a href="#contact">Contact</a>
-    </nav>
-    <div class="nav-cta">
-      <a class="btn btn-ghost" href="#greenbook">Find a Recycler</a>
-      <a class="btn btn-primary" href="#contact">Talk to Ntrhopi</a>
-    </div>
-    <div class="navburger">Menu</div>
-  </div>
-</header>
-
-<main id="top">
-
-  <!-- HERO -->
-  <div class="wrap">
-    <section class="hero" style="padding-top:64px;">
-      <div>
-        <h1>Building a cleaner, more circular India.</h1>
-        <p class="hero-copy">Ntrhopi connects businesses, recyclers and material markets to make waste management simpler, more transparent and more valuable.</p>
-        <div class="hero-actions">
-          <a class="btn btn-primary" href="#greenbook">Explore Greenbook</a>
-          <a class="btn btn-ghost" href="#contact">Talk to Ntrhopi</a>
+      /* ===== FOOTER ===== */
+      footer {
+        background: var(--ink);
+        color: rgba(246, 245, 240, 0.55);
+        padding: 64px 0 32px;
+        font-size: 13.5px;
+      }
+      .foot-grid {
+        display: grid;
+        grid-template-columns: 1.4fr repeat(3, 1fr);
+        gap: 40px;
+      }
+      .foot-logo {
+        font-family: var(--serif);
+        color: var(--paper);
+        font-size: 19px;
+      }
+      .foot-tag {
+        margin-top: 12px;
+        max-width: 30ch;
+      }
+      .foot-col h4 {
+        font-family: var(--sans);
+        color: var(--paper);
+        font-size: 12.5px;
+        font-weight: 500;
+        letter-spacing: 0.03em;
+        text-transform: uppercase;
+        margin-bottom: 14px;
+      }
+      .foot-col a {
+        display: block;
+        padding: 5px 0;
+        color: rgba(246, 245, 240, 0.55);
+      }
+      .foot-col a:hover {
+        color: var(--paper);
+      }
+      .foot-bottom {
+        margin-top: 56px;
+        padding-top: 24px;
+        border-top: 1px solid var(--stone-line-dark);
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+      @media (max-width: 800px) {
+        .foot-grid {
+          grid-template-columns: 1fr 1fr;
+          gap: 32px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="site">
+      <div class="nav">
+        <a class="logo" href="#top">NTRHOPI</a>
+        <nav class="nav-links">
+          <a href="#solutions">Solutions</a>
+          <a href="#industries">Industries</a>
+          <a href="#greenbook">Greenbook</a>
+          <a href="#insights">Insights</a>
+          <a href="#about">About</a>
+          <a href="#contact">Contact</a>
+        </nav>
+        <div class="nav-cta">
+          <a class="btn btn-ghost" href="#greenbook">Find a Recycler</a>
+          <a class="btn btn-primary" href="#contact">Talk to Ntrhopi</a>
         </div>
+        <div class="navburger">Menu</div>
       </div>
-      <div class="hero-diagram">
-        <div class="flow">
-          <div class="node"><span class="dot"></span><span class="label">Generate</span></div>
-          <div class="arrow"></div>
-          <div class="node"><span class="dot"></span><span class="label">Collect</span></div>
-          <div class="arrow"></div>
-          <div class="node"><span class="dot"></span><span class="label">Process</span></div>
-          <div class="arrow"></div>
-          <div class="node"><span class="dot"></span><span class="label">Recycle</span></div>
-        </div>
-        <div class="flow" style="margin-top:2px;">
-          <div class="node"><span class="dot" style="background:var(--ochre)"></span><span class="label">Recover</span></div>
-          <div class="arrow"></div>
-          <div class="node"><span class="dot" style="background:var(--ochre)"></span><span class="label">Reuse</span></div>
-        </div>
-      </div>
-    </section>
-  </div>
+    </header>
 
-  <hr class="rule">
-
-  <!-- FROM WASTE TO RESOURCE -->
-  <div class="wrap">
-    <section>
-      <div class="section-head">
-        <h2>From waste to resource.</h2>
-        <p class="lede">We help connect the people, capabilities and information required to move materials through a more circular economy.</p>
-      </div>
-      <div class="flow-full">
-        <div class="flow-step"><div class="fnum">01</div><div class="flabel">Generate</div></div>
-        <div class="flow-step"><div class="fnum">02</div><div class="flabel">Collect</div></div>
-        <div class="flow-step"><div class="fnum">03</div><div class="flabel">Process</div></div>
-        <div class="flow-step"><div class="fnum">04</div><div class="flabel">Recycle</div></div>
-        <div class="flow-step"><div class="fnum">05</div><div class="flabel">Recover</div></div>
-        <div class="flow-step"><div class="fnum">06</div><div class="flabel">Reuse</div></div>
-      </div>
-    </section>
-  </div>
-
-  <!-- WHAT WE DO -->
-  <div class="section-alt" id="solutions">
-    <div class="wrap" style="padding:88px 32px;">
-      <div class="section-head" style="margin-bottom:40px;">
-        <h2>What we do.</h2>
-        <p class="lede">Four connected disciplines, one aim — a functioning circular economy for Indian businesses.</p>
-      </div>
-      <div class="cards4">
-        <div class="card">
-          <div class="card-index">01</div>
+    <main id="top">
+      <!-- HERO -->
+      <div class="wrap">
+        <section class="hero" style="padding-top: 64px">
           <div>
-            <h3>Recycling &amp; Resource Recovery</h3>
-            <p>Connecting businesses with recycling and recovery solutions across major waste streams.</p>
+            <h1>Building a cleaner, more circular India.</h1>
+            <p class="hero-copy">
+              Ntrhopi connects businesses, recyclers and material markets to
+              make waste management simpler, more transparent and more valuable.
+            </p>
+            <div class="hero-actions">
+              <a class="btn btn-primary" href="#greenbook">Explore Greenbook</a>
+              <a class="btn btn-ghost" href="#contact">Talk to Ntrhopi</a>
+            </div>
+          </div>
+          <div class="hero-diagram">
+            <div class="flow">
+              <div class="node">
+                <span class="dot"></span><span class="label">Generate</span>
+              </div>
+              <div class="arrow"></div>
+              <div class="node">
+                <span class="dot"></span><span class="label">Collect</span>
+              </div>
+              <div class="arrow"></div>
+              <div class="node">
+                <span class="dot"></span><span class="label">Process</span>
+              </div>
+              <div class="arrow"></div>
+              <div class="node">
+                <span class="dot"></span><span class="label">Recycle</span>
+              </div>
+            </div>
+            <div class="flow" style="margin-top: 2px">
+              <div class="node">
+                <span class="dot" style="background: var(--ochre)"></span
+                ><span class="label">Recover</span>
+              </div>
+              <div class="arrow"></div>
+              <div class="node">
+                <span class="dot" style="background: var(--ochre)"></span
+                ><span class="label">Reuse</span>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <hr class="rule" />
+
+      <!-- FROM WASTE TO RESOURCE -->
+      <div class="wrap">
+        <section>
+          <div class="section-head">
+            <h2>From waste to resource.</h2>
+            <p class="lede">
+              We help connect the people, capabilities and information required
+              to move materials through a more circular economy.
+            </p>
+          </div>
+          <div class="flow-full">
+            <div class="flow-step">
+              <div class="fnum">01</div>
+              <div class="flabel">Generate</div>
+            </div>
+            <div class="flow-step">
+              <div class="fnum">02</div>
+              <div class="flabel">Collect</div>
+            </div>
+            <div class="flow-step">
+              <div class="fnum">03</div>
+              <div class="flabel">Process</div>
+            </div>
+            <div class="flow-step">
+              <div class="fnum">04</div>
+              <div class="flabel">Recycle</div>
+            </div>
+            <div class="flow-step">
+              <div class="fnum">05</div>
+              <div class="flabel">Recover</div>
+            </div>
+            <div class="flow-step">
+              <div class="fnum">06</div>
+              <div class="flabel">Reuse</div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- WHAT WE DO -->
+      <div class="section-alt" id="solutions">
+        <div class="wrap" style="padding: 88px 32px">
+          <div class="section-head" style="margin-bottom: 40px">
+            <h2>What we do.</h2>
+            <p class="lede">
+              Four connected disciplines, one aim — a functioning circular
+              economy for Indian businesses.
+            </p>
+          </div>
+          <div class="cards4">
+            <div class="card">
+              <div class="card-index">01</div>
+              <div>
+                <h3>Recycling &amp; Resource Recovery</h3>
+                <p>
+                  Connecting businesses with recycling and recovery solutions
+                  across major waste streams.
+                </p>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-index">02</div>
+              <div>
+                <h3>EPR &amp; Compliance</h3>
+                <p>
+                  Helping businesses navigate India's evolving environmental
+                  compliance landscape.
+                </p>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-index">03</div>
+              <div>
+                <h3>Circular Supply Chain</h3>
+                <p>
+                  Connecting waste generators, recyclers and buyers of recovered
+                  materials.
+                </p>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-index">04</div>
+              <div>
+                <h3>Digital Infrastructure</h3>
+                <p>
+                  Building technology that makes India's fragmented recycling
+                  ecosystem easier to discover, verify and connect.
+                </p>
+              </div>
+            </div>
+          </div>
+          <a class="link-arrow" href="#solutions">
+            Explore Solutions
+            <svg width="16" height="10" viewBox="0 0 16 10" fill="none">
+              <path
+                d="M1 5H15M15 5L10.5 0.5M15 5L10.5 9.5"
+                stroke="currentColor"
+              />
+            </svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- GREENBOOK -->
+      <div class="wrap" id="greenbook">
+        <section>
+          <div class="greenbook-panel">
+            <div>
+              <div class="gb-mark">Greenbook</div>
+              <h2>Meet Greenbook.</h2>
+              <p class="lede">
+                Find recyclers. Verify capabilities. Discover capacity. Build
+                circular supply chains.
+              </p>
+              <div class="gb-actions">
+                <a class="btn btn-on-dark" href="#">Explore Greenbook →</a>
+                <a class="btn btn-ghost-dark" href="#">List Your Facility</a>
+              </div>
+            </div>
+            <div class="gb-mock">
+              <div class="mrow">
+                <span class="mname">ABC Recycling Pvt Ltd</span>
+                <span class="badge">Verified</span>
+              </div>
+              <div class="mloc">Pune, Maharashtra</div>
+              <div class="mtags">
+                <span class="tag">PET</span>
+                <span class="tag">HDPE</span>
+                <span class="tag">PP</span>
+                <span class="tag">Granulation</span>
+              </div>
+              <div class="mscore">
+                <span>Greenbook Score<br /><b>82 / 100</b></span>
+                <span
+                  >Last verified<br /><b style="font-size: 14px"
+                    >Illustrative</b
+                  ></span
+                >
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- WASTE STREAMS -->
+      <div class="wrap">
+        <section>
+          <div class="section-head">
+            <h2>Explore the recycling ecosystem.</h2>
+            <p class="lede">
+              Every stream links through to verified recyclers on Greenbook.
+            </p>
+          </div>
+          <div class="streams">
+            <a class="stream" href="#"
+              >Plastic
+              <svg width="14" height="14" viewBox="0 0 16 16">
+                <path
+                  d="M1 8H15M15 8L10 3M15 8L10 13"
+                  stroke="currentColor"
+                /></svg
+            ></a>
+            <a class="stream" href="#"
+              >Metals
+              <svg width="14" height="14" viewBox="0 0 16 16">
+                <path
+                  d="M1 8H15M15 8L10 3M15 8L10 13"
+                  stroke="currentColor"
+                /></svg
+            ></a>
+            <a class="stream" href="#"
+              >E-Waste
+              <svg width="14" height="14" viewBox="0 0 16 16">
+                <path
+                  d="M1 8H15M15 8L10 3M15 8L10 13"
+                  stroke="currentColor"
+                /></svg
+            ></a>
+            <a class="stream" href="#"
+              >Batteries
+              <svg width="14" height="14" viewBox="0 0 16 16">
+                <path
+                  d="M1 8H15M15 8L10 3M15 8L10 13"
+                  stroke="currentColor"
+                /></svg
+            ></a>
+            <a class="stream" href="#"
+              >Tyres
+              <svg width="14" height="14" viewBox="0 0 16 16">
+                <path
+                  d="M1 8H15M15 8L10 3M15 8L10 13"
+                  stroke="currentColor"
+                /></svg
+            ></a>
+            <a class="stream" href="#"
+              >Paper &amp; Packaging
+              <svg width="14" height="14" viewBox="0 0 16 16">
+                <path
+                  d="M1 8H15M15 8L10 3M15 8L10 13"
+                  stroke="currentColor"
+                /></svg
+            ></a>
+            <a class="stream" href="#"
+              >Glass
+              <svg width="14" height="14" viewBox="0 0 16 16">
+                <path
+                  d="M1 8H15M15 8L10 3M15 8L10 13"
+                  stroke="currentColor"
+                /></svg
+            ></a>
+            <a class="stream" href="#"
+              >Textiles
+              <svg width="14" height="14" viewBox="0 0 16 16">
+                <path
+                  d="M1 8H15M15 8L10 3M15 8L10 13"
+                  stroke="currentColor"
+                /></svg
+            ></a>
+            <a class="stream" href="#"
+              >C&amp;D Waste
+              <svg width="14" height="14" viewBox="0 0 16 16">
+                <path
+                  d="M1 8H15M15 8L10 3M15 8L10 13"
+                  stroke="currentColor"
+                /></svg
+            ></a>
+            <a class="stream" href="#"
+              >Used Oil
+              <svg width="14" height="14" viewBox="0 0 16 16">
+                <path
+                  d="M1 8H15M15 8L10 3M15 8L10 13"
+                  stroke="currentColor"
+                /></svg
+            ></a>
+            <a class="stream" href="#"
+              >Organic Waste
+              <svg width="14" height="14" viewBox="0 0 16 16">
+                <path
+                  d="M1 8H15M15 8L10 3M15 8L10 13"
+                  stroke="currentColor"
+                /></svg
+            ></a>
+          </div>
+        </section>
+      </div>
+
+      <!-- WHY NTRHOPI -->
+      <div class="section-alt" id="industries">
+        <div class="wrap" style="padding: 88px 32px">
+          <div class="section-head" style="margin-bottom: 8px">
+            <h2>Turning fragmentation into infrastructure.</h2>
+            <p class="lede">
+              India's recycling ecosystem is vast, but information about
+              recyclers, capabilities, capacity, compliance and material markets
+              is often fragmented. Ntrhopi is building the digital
+              infrastructure to connect it.
+            </p>
+          </div>
+          <div class="cols3">
+            <div class="col">
+              <h3><span class="cnum">01</span>Discover</h3>
+              <p>Find relevant recyclers and waste processors.</p>
+            </div>
+            <div class="col">
+              <h3><span class="cnum">02</span>Verify</h3>
+              <p>Understand business, facility and compliance credentials.</p>
+            </div>
+            <div class="col">
+              <h3><span class="cnum">03</span>Connect</h3>
+              <p>
+                Turn discovery into enquiries, sourcing and recycling
+                partnerships.
+              </p>
+            </div>
           </div>
         </div>
-        <div class="card">
-          <div class="card-index">02</div>
+      </div>
+
+      <!-- INTELLIGENCE -->
+      <div class="section-dark">
+        <div class="wrap" style="padding: 88px 32px">
+          <div class="section-head" style="margin-bottom: 8px">
+            <h2>Intelligence for the circular economy.</h2>
+            <p class="lede">
+              Structured data on the businesses, capacity and compliance that
+              make up India's recycling ecosystem.
+            </p>
+          </div>
+          <div class="intel-grid">
+            <div class="intel-item"><span>Recycler intelligence</span></div>
+            <div class="intel-item"><span>Processing capacity</span></div>
+            <div class="intel-item"><span>Material intelligence</span></div>
+            <div class="intel-item"><span>EPR intelligence</span></div>
+            <div class="intel-item"><span>Geographic insights</span></div>
+            <div class="intel-item"><span>Market insights</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- IMPACT -->
+      <div class="section-dark" style="padding-top: 0">
+        <div class="wrap" style="padding: 0 32px 88px">
+          <div class="impact-grid">
+            <div class="impact-cell">
+              <div class="imetric">Recyclers mapped</div>
+              <div class="ival">Live once verified data is published</div>
+            </div>
+            <div class="impact-cell">
+              <div class="imetric">Facilities mapped</div>
+              <div class="ival">Live once verified data is published</div>
+            </div>
+            <div class="impact-cell">
+              <div class="imetric">Waste streams covered</div>
+              <div class="ival">Live once verified data is published</div>
+            </div>
+            <div class="impact-cell">
+              <div class="imetric">States covered</div>
+              <div class="ival">Live once verified data is published</div>
+            </div>
+            <div class="impact-cell">
+              <div class="imetric">Businesses connected</div>
+              <div class="ival">Live once verified data is published</div>
+            </div>
+            <div class="impact-cell">
+              <div class="imetric">Processing capacity mapped</div>
+              <div class="ival">Live once verified data is published</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- INSIGHTS -->
+      <div class="wrap" id="insights">
+        <section>
+          <div class="section-head">
+            <h2>Insights.</h2>
+            <p class="lede">
+              Reporting and analysis on compliance, recycling and the circular
+              economy.
+            </p>
+          </div>
+          <div class="insight-list">
+            <a class="insight-row" href="#"
+              ><span class="icat">EPR &amp; Compliance</span>
+              <h3>Reading India's evolving EPR compliance landscape</h3>
+              <span class="iarrow">→</span></a
+            >
+            <a class="insight-row" href="#"
+              ><span class="icat">Recycling</span>
+              <h3>What "verified" should mean for a recycling facility</h3>
+              <span class="iarrow">→</span></a
+            >
+            <a class="insight-row" href="#"
+              ><span class="icat">Circular Economy</span>
+              <h3>Why material markets need better information</h3>
+              <span class="iarrow">→</span></a
+            >
+            <a class="insight-row" href="#"
+              ><span class="icat">Waste Management</span>
+              <h3>Mapping India's fragmented recycling ecosystem</h3>
+              <span class="iarrow">→</span></a
+            >
+            <a class="insight-row" href="#"
+              ><span class="icat">Recycled Materials</span>
+              <h3>Sourcing recycled material at scale</h3>
+              <span class="iarrow">→</span></a
+            >
+            <a class="insight-row" href="#"
+              ><span class="icat">Industry Updates</span>
+              <h3>Notes from the field</h3>
+              <span class="iarrow">→</span></a
+            >
+          </div>
+          <a class="link-arrow" href="#insights">
+            View All Insights
+            <svg width="16" height="10" viewBox="0 0 16 10" fill="none">
+              <path
+                d="M1 5H15M15 5L10.5 0.5M15 5L10.5 9.5"
+                stroke="currentColor"
+              />
+            </svg>
+          </a>
+        </section>
+      </div>
+
+      <!-- FINAL CTA -->
+      <div class="wrap" id="contact">
+        <section style="padding-top: 0">
+          <div class="final-grid">
+            <div class="final-cell">
+              <h2>Have waste to manage?</h2>
+              <p>Let Ntrhopi help you find the right recycling pathway.</p>
+              <div class="contact-details">
+                <a href="mailto:contact@ntrhopi.com">contact@ntrhopi.com</a>
+                <a href="tel:7028444612">7028444612</a>
+              </div>
+              <div class="final-actions">
+                <a class="btn btn-on-dark" href="#greenbook">Find a Recycler</a>
+                <a class="btn btn-ghost-dark" href="mailto:contact@ntrhopi.com"
+                  >Contact Ntrhopi</a
+                >
+              </div>
+            </div>
+            <div class="final-cell recycler">
+              <h2>Are you a recycler?</h2>
+              <p>List your facility on Greenbook.</p>
+              <div class="final-actions">
+                <a class="btn btn-on-dark" href="#">List Your Facility</a>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer id="about">
+      <div class="wrap">
+        <div class="foot-grid">
           <div>
-            <h3>EPR &amp; Compliance</h3>
-            <p>Helping businesses navigate India's evolving environmental compliance landscape.</p>
+            <div class="foot-logo">NTRHOPI</div>
+            <p class="foot-tag">Building a cleaner, more circular India.</p>
+          </div>
+          <div class="foot-col">
+            <h4>Company</h4>
+            <a href="#solutions">Solutions</a>
+            <a href="#industries">Industries</a>
+            <a href="#about">About</a>
+            <a href="#insights">Insights</a>
+          </div>
+          <div class="foot-col">
+            <h4>Greenbook</h4>
+            <a href="#greenbook">Find a Recycler</a>
+            <a href="#">List Your Facility</a>
+            <a href="#">Directory</a>
+          </div>
+          <div class="foot-col">
+            <h4>Company Info</h4>
+            <a href="#contact">Contact</a>
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Use</a>
           </div>
         </div>
-        <div class="card">
-          <div class="card-index">03</div>
-          <div>
-            <h3>Circular Supply Chain</h3>
-            <p>Connecting waste generators, recyclers and buyers of recovered materials.</p>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-index">04</div>
-          <div>
-            <h3>Digital Infrastructure</h3>
-            <p>Building technology that makes India's fragmented recycling ecosystem easier to discover, verify and connect.</p>
-          </div>
+        <div class="foot-bottom">
+          <span>© 2026 Ntrhopi. All rights reserved.</span>
+          <span>India</span>
         </div>
       </div>
-      <a class="link-arrow" href="#solutions">
-        Explore Solutions
-        <svg width="16" height="10" viewBox="0 0 16 10" fill="none"><path d="M1 5H15M15 5L10.5 0.5M15 5L10.5 9.5" stroke="currentColor"/></svg>
-      </a>
-    </div>
-  </div>
-
-  <!-- GREENBOOK -->
-  <div class="wrap" id="greenbook">
-    <section>
-      <div class="greenbook-panel">
-        <div>
-          <div class="gb-mark">Greenbook</div>
-          <h2>Meet Greenbook.</h2>
-          <p class="lede">Find recyclers. Verify capabilities. Discover capacity. Build circular supply chains.</p>
-          <div class="gb-actions">
-            <a class="btn btn-on-dark" href="#">Explore Greenbook →</a>
-            <a class="btn btn-ghost-dark" href="#">List Your Facility</a>
-          </div>
-        </div>
-        <div class="gb-mock">
-          <div class="mrow">
-            <span class="mname">ABC Recycling Pvt Ltd</span>
-            <span class="badge">Verified</span>
-          </div>
-          <div class="mloc">Pune, Maharashtra</div>
-          <div class="mtags">
-            <span class="tag">PET</span>
-            <span class="tag">HDPE</span>
-            <span class="tag">PP</span>
-            <span class="tag">Granulation</span>
-          </div>
-          <div class="mscore">
-            <span>Greenbook Score<br><b>82 / 100</b></span>
-            <span>Last verified<br><b style="font-size:14px;">Illustrative</b></span>
-          </div>
-        </div>
-      </div>
-    </section>
-  </div>
-
-  <!-- WASTE STREAMS -->
-  <div class="wrap">
-    <section>
-      <div class="section-head">
-        <h2>Explore the recycling ecosystem.</h2>
-        <p class="lede">Every stream links through to verified recyclers on Greenbook.</p>
-      </div>
-      <div class="streams">
-        <a class="stream" href="#">Plastic <svg width="14" height="14" viewBox="0 0 16 16"><path d="M1 8H15M15 8L10 3M15 8L10 13" stroke="currentColor"/></svg></a>
-        <a class="stream" href="#">Metals <svg width="14" height="14" viewBox="0 0 16 16"><path d="M1 8H15M15 8L10 3M15 8L10 13" stroke="currentColor"/></svg></a>
-        <a class="stream" href="#">E-Waste <svg width="14" height="14" viewBox="0 0 16 16"><path d="M1 8H15M15 8L10 3M15 8L10 13" stroke="currentColor"/></svg></a>
-        <a class="stream" href="#">Batteries <svg width="14" height="14" viewBox="0 0 16 16"><path d="M1 8H15M15 8L10 3M15 8L10 13" stroke="currentColor"/></svg></a>
-        <a class="stream" href="#">Tyres <svg width="14" height="14" viewBox="0 0 16 16"><path d="M1 8H15M15 8L10 3M15 8L10 13" stroke="currentColor"/></svg></a>
-        <a class="stream" href="#">Paper &amp; Packaging <svg width="14" height="14" viewBox="0 0 16 16"><path d="M1 8H15M15 8L10 3M15 8L10 13" stroke="currentColor"/></svg></a>
-        <a class="stream" href="#">Glass <svg width="14" height="14" viewBox="0 0 16 16"><path d="M1 8H15M15 8L10 3M15 8L10 13" stroke="currentColor"/></svg></a>
-        <a class="stream" href="#">Textiles <svg width="14" height="14" viewBox="0 0 16 16"><path d="M1 8H15M15 8L10 3M15 8L10 13" stroke="currentColor"/></svg></a>
-        <a class="stream" href="#">C&amp;D Waste <svg width="14" height="14" viewBox="0 0 16 16"><path d="M1 8H15M15 8L10 3M15 8L10 13" stroke="currentColor"/></svg></a>
-        <a class="stream" href="#">Used Oil <svg width="14" height="14" viewBox="0 0 16 16"><path d="M1 8H15M15 8L10 3M15 8L10 13" stroke="currentColor"/></svg></a>
-        <a class="stream" href="#">Organic Waste <svg width="14" height="14" viewBox="0 0 16 16"><path d="M1 8H15M15 8L10 3M15 8L10 13" stroke="currentColor"/></svg></a>
-      </div>
-    </section>
-  </div>
-
-  <!-- WHY NTRHOPI -->
-  <div class="section-alt" id="industries">
-    <div class="wrap" style="padding:88px 32px;">
-      <div class="section-head" style="margin-bottom:8px;">
-        <h2>Turning fragmentation into infrastructure.</h2>
-        <p class="lede">India's recycling ecosystem is vast, but information about recyclers, capabilities, capacity, compliance and material markets is often fragmented. Ntrhopi is building the digital infrastructure to connect it.</p>
-      </div>
-      <div class="cols3">
-        <div class="col">
-          <h3><span class="cnum">01</span>Discover</h3>
-          <p>Find relevant recyclers and waste processors.</p>
-        </div>
-        <div class="col">
-          <h3><span class="cnum">02</span>Verify</h3>
-          <p>Understand business, facility and compliance credentials.</p>
-        </div>
-        <div class="col">
-          <h3><span class="cnum">03</span>Connect</h3>
-          <p>Turn discovery into enquiries, sourcing and recycling partnerships.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- INTELLIGENCE -->
-  <div class="section-dark">
-    <div class="wrap" style="padding:88px 32px;">
-      <div class="section-head" style="margin-bottom:8px;">
-        <h2>Intelligence for the circular economy.</h2>
-        <p class="lede">Structured data on the businesses, capacity and compliance that make up India's recycling ecosystem.</p>
-      </div>
-      <div class="intel-grid">
-        <div class="intel-item"><span>Recycler intelligence</span></div>
-        <div class="intel-item"><span>Processing capacity</span></div>
-        <div class="intel-item"><span>Material intelligence</span></div>
-        <div class="intel-item"><span>EPR intelligence</span></div>
-        <div class="intel-item"><span>Geographic insights</span></div>
-        <div class="intel-item"><span>Market insights</span></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- IMPACT -->
-  <div class="section-dark" style="padding-top:0;">
-    <div class="wrap" style="padding:0 32px 88px;">
-      <div class="impact-grid">
-        <div class="impact-cell"><div class="imetric">Recyclers mapped</div><div class="ival">Live once verified data is published</div></div>
-        <div class="impact-cell"><div class="imetric">Facilities mapped</div><div class="ival">Live once verified data is published</div></div>
-        <div class="impact-cell"><div class="imetric">Waste streams covered</div><div class="ival">Live once verified data is published</div></div>
-        <div class="impact-cell"><div class="imetric">States covered</div><div class="ival">Live once verified data is published</div></div>
-        <div class="impact-cell"><div class="imetric">Businesses connected</div><div class="ival">Live once verified data is published</div></div>
-        <div class="impact-cell"><div class="imetric">Processing capacity mapped</div><div class="ival">Live once verified data is published</div></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- INSIGHTS -->
-  <div class="wrap" id="insights">
-    <section>
-      <div class="section-head">
-        <h2>Insights.</h2>
-        <p class="lede">Reporting and analysis on compliance, recycling and the circular economy.</p>
-      </div>
-      <div class="insight-list">
-        <a class="insight-row" href="#"><span class="icat">EPR &amp; Compliance</span><h3>Reading India's evolving EPR compliance landscape</h3><span class="iarrow">→</span></a>
-        <a class="insight-row" href="#"><span class="icat">Recycling</span><h3>What "verified" should mean for a recycling facility</h3><span class="iarrow">→</span></a>
-        <a class="insight-row" href="#"><span class="icat">Circular Economy</span><h3>Why material markets need better information</h3><span class="iarrow">→</span></a>
-        <a class="insight-row" href="#"><span class="icat">Waste Management</span><h3>Mapping India's fragmented recycling ecosystem</h3><span class="iarrow">→</span></a>
-        <a class="insight-row" href="#"><span class="icat">Recycled Materials</span><h3>Sourcing recycled material at scale</h3><span class="iarrow">→</span></a>
-        <a class="insight-row" href="#"><span class="icat">Industry Updates</span><h3>Notes from the field</h3><span class="iarrow">→</span></a>
-      </div>
-      <a class="link-arrow" href="#insights">
-        View All Insights
-        <svg width="16" height="10" viewBox="0 0 16 10" fill="none"><path d="M1 5H15M15 5L10.5 0.5M15 5L10.5 9.5" stroke="currentColor"/></svg>
-      </a>
-    </section>
-  </div>
-
-  <!-- FINAL CTA -->
-  <div class="wrap" id="contact">
-    <section style="padding-top:0;">
-      <div class="final-grid">
-        <div class="final-cell">
-          <h2>Have waste to manage?</h2>
-          <p>Let Ntrhopi help you find the right recycling pathway.</p>
-          <div class="final-actions">
-            <a class="btn btn-on-dark" href="#greenbook">Find a Recycler</a>
-            <a class="btn btn-ghost-dark" href="#contact">Contact Ntrhopi</a>
-          </div>
-        </div>
-        <div class="final-cell recycler">
-          <h2>Are you a recycler?</h2>
-          <p>List your facility on Greenbook.</p>
-          <div class="final-actions">
-            <a class="btn btn-on-dark" href="#">List Your Facility</a>
-          </div>
-        </div>
-      </div>
-    </section>
-  </div>
-
-</main>
-
-<footer id="about">
-  <div class="wrap">
-    <div class="foot-grid">
-      <div>
-        <div class="foot-logo">NTRHOPI</div>
-        <p class="foot-tag">Building a cleaner, more circular India.</p>
-      </div>
-      <div class="foot-col">
-        <h4>Company</h4>
-        <a href="#solutions">Solutions</a>
-        <a href="#industries">Industries</a>
-        <a href="#about">About</a>
-        <a href="#insights">Insights</a>
-      </div>
-      <div class="foot-col">
-        <h4>Greenbook</h4>
-        <a href="#greenbook">Find a Recycler</a>
-        <a href="#">List Your Facility</a>
-        <a href="#">Directory</a>
-      </div>
-      <div class="foot-col">
-        <h4>Company Info</h4>
-        <a href="#contact">Contact</a>
-        <a href="#">Privacy Policy</a>
-        <a href="#">Terms of Use</a>
-      </div>
-    </div>
-    <div class="foot-bottom">
-      <span>© 2026 Ntrhopi. All rights reserved.</span>
-      <span>India</span>
-    </div>
-  </div>
-</footer>
-
-</body>
+    </footer>
+  </body>
 </html>
